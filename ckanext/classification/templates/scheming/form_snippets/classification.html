@@ -1,0 +1,33 @@
+{% import 'macros/form.html' as form %}
+
+{% set options=[] %}
+{% set current_user_id = h.classification_get_current_user_id() %}
+{% set org_id = h.classification_get_org( data.package_id if data.package_id else h.full_current_url() ) %}
+{% set user_classification = h.classification_get_classification(current_user_id, org_id, object_type) %}
+
+{%- for c in field.choices -%}
+    {% if c.value|int <= user_classification|int %}
+      {%- do options.append({
+        'value': c.value,
+        'text': h.scheming_language_text(c.label) }) -%}
+    {% endif %}
+{%- endfor -%}
+
+{%- if field.get('sorted_choices') -%}
+  {%- set options = options|sort(case_sensitive=false, attribute='text') -%}
+{%- endif -%}
+
+
+{% call form.select(
+    field.field_name,
+    id='field-' + field.field_name,
+    label=h.scheming_language_text(field.label),
+    options=options,
+    selected=data[field.field_name],
+    error=errors[field.field_name],
+    classes=['control-medium'],
+    is_required=h.scheming_field_required(field)
+    )
+%}
+    {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
+{% endcall %}

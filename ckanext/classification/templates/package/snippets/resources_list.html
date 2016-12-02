@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+
+{% block resource_list_inner %}
+  {% set user_classification = h.classification_get_classification(h.classification_get_current_user_id(), pkg.owner_org, pkg.type) %}
+  {% for resource in resources %}
+    {% if not resource.classification or resource.classification <= user_classification %}
+      {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource %}
+    {% endif %}
+  {% endfor %}
+{% endblock %}
