@@ -4,13 +4,27 @@
 {% set user = c.user %}
 {% set types = h.classification_get_dataset_types_w_classification() %}
 
-{% macro classification_params(types) %}
+{% macro classification_values(types) %}
     {% set list = [] %}
     {% for t in types %}
         {%- do list.append("\"" + t + "\"" + ":\"[" + h.classification_get_all_classifications(t)|join(", ") + "]\"") %}
     {% endfor %}
     data-module-classifications='{ {{  list|join(', ') }} }'
 {% endmacro %}
+
+{% macro classification_labels(types) %}
+    {% set list = [] %}
+    {% for t in types %}
+        {% set list_tmp = h.classification_get_all_classifications_label(t) %}
+        {% set tmp = [] %}
+        {% for e in list_tmp %}
+           {%- do tmp.append("\\\"" + e + "\\\"") %}
+        {% endfor %}
+        {%- do list.append("\"" + t + "\"" + ":\"[" + tmp|join(", ") + "]\"") %}
+    {% endfor %}
+    data-module-classification_labels='{ {{  list|join(', ') }} }'
+{% endmacro %}
+
 
 
 {% block primary_content_inner %}
@@ -46,7 +60,8 @@
             <select name='field-dataset_type'  
                     id='field-dataset_type'
                     data-module='classification'
-                    {{ classification_params(types) }}
+                    {{ classification_values(types) }}
+                    {{ classification_labels(types) }}
             >
                {% for t in types %}
                     <option value={{ t }}>{{ t }}</option>

@@ -37,7 +37,8 @@ class ClassificationPlugin(plugins.SingletonPlugin):
             'classification_get_dataset_types_w_classification': helpers.get_dataset_types_w_classification,
             'classification_get_org': helpers.get_org,
             'classification_get_current_user_id': helpers.get_current_user_id,
-            'classification_get_classification': helpers.get_classification
+            'classification_get_classification': helpers.get_classification,
+            'classification_get_all_classifications_label': helpers.get_all_classifications_label
         }
 
     """
