@@ -2,11 +2,9 @@
 
 
 {% block resource_item_title %}
-  <h3>
     {{ super() }}
     {% resource 'classification/css/main.css' %}
      <span class="label classification_{{ res.classification }}" ><i class="label label-info" ></i>{{ _(res.classification) }}</span>
- </h3>
 {% endblock %}
 
   
