@@ -23,12 +23,17 @@ ckan.module('classification', function ($, _) {
     get_classifications: function(dataset_type){
       var classification_field = $('#field-classification');
       var classifications = this.options.classifications[dataset_type];
+      var classification_labels = this.options.classification_labels[dataset_type];
+      console.log(classifications);
+      console.log(classification_labels);
       var c_list = JSON.parse(classifications);
+      var c_label_list = JSON.parse(classification_labels);
       classification_field.children().remove();
+
       $.each(c_list, function (index, value) {
           classification_field.append($('<option/>', { 
               value: value,
-              text : value 
+              text : c_label_list[index] 
           }));
       });
     },

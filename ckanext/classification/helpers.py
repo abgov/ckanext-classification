@@ -21,6 +21,13 @@ def _get_classfication_field(dataset_type):
 		return None
 
 
+def get_all_classifications_label(dataset_type):
+	classification = _get_classfication_field(dataset_type)
+	if not classification:
+		return []
+	return [ c['label'] for c in classification['choices'] ]
+
+
 def get_all_classifications(dataset_type):
 	classification = _get_classfication_field(dataset_type)
 	if not classification:
