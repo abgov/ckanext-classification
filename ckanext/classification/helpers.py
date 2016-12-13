@@ -21,6 +21,13 @@ def _get_classfication_field(dataset_type):
 		return None
 
 
+def get_label_by_type_value(value, dataset_type):
+	values = get_all_classifications(dataset_type)
+	lables = get_all_classifications_label(dataset_type)
+	dictionary = dict(zip(values, lables))
+	return dictionary[value]
+
+
 def get_all_classifications_label(dataset_type):
 	classification = _get_classfication_field(dataset_type)
 	if not classification:
