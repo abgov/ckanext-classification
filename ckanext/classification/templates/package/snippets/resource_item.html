@@ -4,7 +4,9 @@
 {% block resource_item_title %}
     {{ super() }}
     {% resource 'classification/css/main.css' %}
-     <span class="label classification_{{ res.classification }}" ><i class="label label-info" ></i>{{ _(h.classification_get_label(res.classification, pkg.type)) }}</span>
+    {% if h.classification_get_label(res.classification, pkg.type) %}
+        <span class="label classification_{{ res.classification }}" ><i class="label label-info" ></i>{{ _(h.classification_get_label(res.classification, pkg.type)) }}</span>
+    {% endif %}
 {% endblock %}
 
   
