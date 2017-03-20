@@ -101,6 +101,10 @@ class ClassificationPlugin(plugins.SingletonPlugin):
 
     def before_view(self, pkg_dict):
         #handle old data with no classification field
+        classifications = helpers.get_all_classifications(pkg_dict['type'])
+        if not classifications: # No classification field in this type
+            return pkg_dict
+
         flag_no_classification = False
         resources = []
         for res in pkg_dict['resources']:

@@ -60,11 +60,11 @@ def get_dataset_types_w_classification():
 
 
 def get_classification(user_id, org_id, dataset_type):
+    all_classifications = get_all_classifications(dataset_type)
+    if not all_classifications:
+        return None
     if is_admin(user_id, org_id):
         # highest classification for admin
-        all_classifications = get_all_classifications(dataset_type)
-        if not all_classifications:
-            return None
         return all_classifications[-1]
 
     instance = SecurityMember.get(model.Session,
@@ -75,9 +75,6 @@ def get_classification(user_id, org_id, dataset_type):
         return instance.classification
     else:
         #default for everybody
-        all_classifications = get_all_classifications(dataset_type)
-        if not all_classifications:
-            return None
         return all_classifications[0]
 
 
